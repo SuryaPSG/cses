@@ -45,17 +45,17 @@ void solve(){
         ll x,y;
         cin>>x>>y;
         ll r=vec[x],s=vec[y];
+        if(idx[r-1]>idx[r]) res--;
+        if(idx[r]>idx[r+1]) res--;
+        if(s-1!=r and idx[s-1]>idx[s]) res--;
+        if(s+1!=r and idx[s]>idx[s+1]) res--;
         swap(vec[x],vec[y]);
-        if(idx[r-1]<=idx[r] and idx[r-1]>y) res++;
-        if(idx[r-1]>idx[r] and idx[r-1]<=y) res--;
-        if(idx[r]<=idx[r+1] and y>idx[r+1]) res++;
-        if(idx[r]>idx[r+1] and y<=idx[r+1]) res--;
-        idx[r]=y;
-        if(idx[s-1]<=idx[s] and idx[s-1]>x) res++;
-        if(idx[s-1]>idx[s] and idx[s-1]<=x) res--;
-        if(idx[s]<=idx[s+1] and x>idx[s+1]) res++;
-        if(idx[s]>idx[s+1] and x<=idx[s+1]) res--;
         idx[s]=x;
+        idx[r]=y;
+        if(idx[r-1]>idx[r]) res++;
+        if(idx[r]>idx[r+1]) res++;
+        if(s-1!=r and idx[s-1]>idx[s]) res++;
+        if(s+1!=r and idx[s]>idx[s+1]) res++;
         cout<<res<<endl;
     }
 }
