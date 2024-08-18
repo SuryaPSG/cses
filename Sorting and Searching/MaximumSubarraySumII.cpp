@@ -31,16 +31,16 @@ void solve(){
     multiset<ll> st;
     ll n,a,b;
     cin>>n>>a>>b;
-    vl pref(n+1);
+    vl pre(n+1);
     forl(i,1,n+1){
-        cin>>pref[i];
+        cin>>pre[i];
+        pre[i]+=pre[i-1];
     }
-    forl(i,1,n+1) pref[i]+=pref[i-1];
     ll res=-INF;
-    for(int i=a;i<=n;i++){
-        if(i>b) st.erase(st.find(pref[i-b-1]));
-        st.insert(pref[i-a]);
-        res=max(res,pref[i]-*st.begin());
+    forl(i,a,n+1){
+        if(i>b) st.erase(st.find(pre[i-b-1]));
+        st.insert(pre[i-a]);
+        res=max(res,pre[i]-*st.begin());
     }
     cout<<res<<endl;
 }

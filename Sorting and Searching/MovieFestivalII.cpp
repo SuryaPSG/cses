@@ -31,18 +31,20 @@ void solve(){
     ll n,k;
     cin>>n>>k;
     vll vec(n);
-    forl(i,0,n) cin>>vec[i].first>>vec[i].second;
-    sort(all(vec),[](pll &a,pll &b){
+    forl(i,0,n){
+        cin>>vec[i].fi>>vec[i].se;
+    }
+    sort(vec.begin(),vec.end(),[](pll &a,pll &b){
         return a.se<b.se;
     });
-    multiset<int> st;
-    forl(i,0,k) st.insert(0);
-    int res=0;
-    forl(i,0,n){
-        auto it=st.upper_bound(vec[i].fi);
+    multiset<ll> st;
+    for(int i=0;i<k;i++) st.insert(0);
+    ll res=0;
+    for(int i=0;i<n;i++){
+        auto it =st.upper_bound(vec[i].first);
         if(it==st.begin()) continue;
         st.erase(--it);
-        st.insert(vec[i].se);
+        st.insert(vec[i].second);
         res++;
     }
     cout<<res<<endl;

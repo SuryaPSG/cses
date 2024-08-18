@@ -26,12 +26,14 @@ typedef unordered_set<ll> usll;
 typedef set<ll> sll;
 const double PI = acos(-1);
 const ll INF=0x3f3f3f3f3f3f3f3f;
-ll p[48];
-int dir[4][2]={{-1,0},{1,0},{0,1},{0,-1}};
+
+vl path(48);
+ll dir[4][2]={{1,0},{-1,0},{0,-1},{0,1}};
 ll dp[9][9];
+
 int solve(int idx,int x,int y){
-    if((dp[x][y-1] and dp[x][y+1]) and (!dp[x-1][y] and !dp[x+1][y])) return 0;
-    if((dp[x-1][y] and dp[x+1][y]) and (!dp[x][y-1] and !dp[x][y+1])) return 0;
+    if(dp[x-1][y] && dp[x+1][y] && !dp[x][y-1] && !dp[x][y+1]) return 0;
+    if(dp[x][y-1] && dp[x][y+1] && !dp[x-1][y] && !dp[x+1][y]) return 0;
     if(x==7 and y==1){
         if(idx==48) return 1;
         return 0;
@@ -39,9 +41,9 @@ int solve(int idx,int x,int y){
     if(idx==48) return 0;
     dp[x][y]=1;
     int res=0;
-    if(p[idx]<4){
-        int nx=x+dir[p[idx]][0];
-        int ny=y+dir[p[idx]][1];
+    if(path[idx]<4){
+        int nx=x+dir[path[idx]][0];
+        int ny=y+dir[path[idx]][1];
         if(!dp[nx][ny]) res+=solve(idx+1,nx,ny);
     }
     else{
@@ -55,22 +57,23 @@ int solve(int idx,int x,int y){
     return res;
 }
 
+
 void solve(){
     string str;
     cin>>str;
-    memset(dp,0,sizeof(dp));
-    for(int i=0;i<9;i++){
-        dp[i][0]=1;
-        dp[0][i]=1;
-        dp[i][8]=1;
-        dp[8][i]=1;
+    for(int i=0;i<48;i++){
+        if(str[i]=='D') path[i]=0;
+        else if(str[i]=='U') path[i]=1;
+        else if(str[i]=='L') path[i]=2;
+        else if(str[i]=='R') path[i]=3;
+        else path[i]=4;
     }
-    forl(i,0,48){
-        if(str[i]=='U') p[i]=0;
-        else if(str[i]=='D') p[i]=1;
-        else if(str[i]=='R') p[i]=2;
-        else if(str[i]=='L') p[i]=3;
-        else p[i]=4;
+    memset(dp,0,sizeof(dp));
+    forl(i,0,9){
+        dp[i][0]=1;
+        dp[i][8]=1;
+        dp[0][i]=1;
+        dp[8][i]=1;
     }
     cout<<solve(0,1,1)<<endl;
 }

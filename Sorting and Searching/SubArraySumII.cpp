@@ -31,7 +31,7 @@ void solve(){
     cin>>n>>t;
     vl vec(n);
     forl(i,0,n) cin>>vec[i];
-    umll mp;
+    mll mp;
     mp[0]=1;
     ll c=0;
     forl(i,0,n){
