@@ -43,11 +43,11 @@ void build(ll idx,ll left, ll right){
     seg[idx]=max(seg[2*idx+1],seg[2*idx+2]);
 }
  
-ll minval(ll idx,ll left, ll right,ll l,ll r){
+ll maxval(ll idx,ll left, ll right,ll l,ll r){
     if(l<=left and right<=r) return seg[idx];
     if(left>r or right<l) return 0;
     ll m=(left+right)>>1;
-    return max(minval(2*idx+1,left,m,l,r),minval(2*idx+2,m+1,right,l,r));
+    return max(maxval(2*idx+1,left,m,l,r),maxval(2*idx+2,m+1,right,l,r));
 }
 
 void pointUpdate(ll idx, ll left,ll right,ll node,ll val){
@@ -92,7 +92,7 @@ void solve(){
     forl(i,0,n){
         int idx=vec[i].se;
         ll ll = lt[idx], rr= rt[idx];
-        dp[idx]= minval(0,0,n-1,ll+1,rr-1)+1;
+        dp[idx]= maxval(0,0,n-1,ll+1,rr-1)+1;
         pointUpdate(0,0,n-1,idx,dp[idx]);
         res=max(res,dp[idx]);
     }
